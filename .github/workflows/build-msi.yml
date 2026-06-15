@@ -1,0 +1,61 @@
+name: Build MSI Installer
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Add Wix to PATH
+      run: echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $GITHUB_PATH
+      shell: bash
+
+    - name: Create WiX Configuration
+      run: |
+        cat << 'EOF' > product.wxs
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Wix xmlns="http://microsoft.com">
+            <Product Id="*" Name="AirTicketHub" Language="1049" Version="1.0.0.0" Manufacturer="VUZ" UpgradeCode="77777777-7777-7777-7777-777777777777">
+                <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+                <MediaTemplate EmbedCab="yes" />
+                <Directory Id="TARGETDIR" Name="SourceDir">
+                    <Directory Id="ProgramFilesFolder">
+                        <Directory Id="INSTALLFOLDER" Name="AirTicketHub">
+                            <Component Id="MainFiles" Guid="11111111-1111-1111-1111-111111111111">
+                                <File Source="index.html" />
+                                <File Source="script.js" />
+                                <File Source="styles.css" />
+                                <File Source="Интерфейс.docx" />
+                                <File Source="МЖЦ.docx" />
+                                <File Source="ПредметнаяОбласть.docx" />
+                                <File Source="Руководства оператора.docx" />
+                                <File Source="ТестКейс.docx" />
+                            </Component>
+                        </Directory>
+                    </Directory>
+                </Directory>
+                <Feature Id="ProductFeature" Title="AirTicketHub" Level="1">
+                    <ComponentRef Id="MainFiles" />
+                </Feature>
+            </Product>
+        </Wix>
+        EOF
+      shell: bash
+
+    - name: Compile MSI
+      run: |
+        candle product.wxs
+        light product.wixobj -out AirTicketHub.msi
+
+    - name: Upload Installer Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: AirTicketHub-MSI
+        path: AirTicketHub.msi
