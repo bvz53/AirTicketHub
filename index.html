@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirTicketHub - Покупка авиабилетов</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo" onclick="showPage('home')">✈ AirTicketHub</div>
+            <nav class="nav">
+                <a onclick="showPage('home')">Главная</a>
+                <a onclick="showPage('tickets')">Купленные билеты</a>
+                <a onclick="showPage('flights')">Все рейсы</a>
+                <a onclick="showPage('support')">Поддержка</a>
+                <a onclick="showPage('promotions')">Акции</a>
+                <a onclick="showPage('reviews')">Отзывы</a>
+            </nav>
+            <div class="user-actions">
+                <button class="btn-cabinet" onclick="showPage('cabinet')">Личный кабинет</button>
+                <button class="btn-register" onclick="openModal('registerModal')">Регистрация</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Отслеживание заказа (доступно на любой странице) -->
+    <div class="order-tracking">
+        <button onclick="openModal('trackOrderModal')">📦 Отследить заказ</button>
+    </div>
+
+    <main class="container main-content">
+
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>Найдите лучшие авиабилеты</h1>
+                <p>Тысячи направлений по всему миру по выгодным ценам</p>
+                <div class="search-box">
+                    <input type="text" placeholder="Откуда">
+                    <input type="text" placeholder="Куда">
+                    <input type="date">
+                    <button class="btn-primary">Найти</button>
+                </div>
+            </div>
+
+            <h2>Популярные направления</h2>
+            <div class="cards-grid">
+                <div class="card" onclick="showPage('flights')">
+                    <div class="card-img">🏛️</div>
+                    <h3>Москва — Санкт-Петербург</h3>
+                    <p>От 3 500 ₽</p>
+                </div>
+                <div class="card" onclick="showPage('flights')">
+                    <div class="card-img">🌴</div>
+                    <h3>Москва — Сочи</h3>
+                    <p>От 5 200 ₽</p>
+                </div>
+                <div class="card" onclick="showPage('flights')">
+                    <div class="card-img">🕌</div>
+                    <h3>Москва — Стамбул</h3>
+                    <p>От 12 800 ₽</p>
+                </div>
+                <div class="card" onclick="showPage('flights')">
+                    <div class="card-img">🗼</div>
+                    <h3>Москва — Дубай</h3>
+                    <p>От 18 500 ₽</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЛИЧНЫЙ КАБИНЕТ -->
+        <section id="cabinet" class="page">
+            <h1>Личный кабинет</h1>
+            <div class="cabinet-info">
+                <div class="user-avatar">👤</div>
+                <div>
+                    <h2>Иванов Иван Иванович</h2>
+                    <p>example@gmail.com</p>
+                </div>
+            </div>
+            <div class="cabinet-actions">
+                <button class="btn-primary" onclick="openModal('cardModal')">💳 Привязка карты</button>
+                <button class="btn-primary" onclick="openModal('editProfileModal')">✏️ Редактирование профиля</button>
+                <button class="btn-secondary" onclick="showPage('tickets')">🎫 Мои билеты</button>
+            </div>
+        </section>
+
+        <!-- КУПЛЕННЫЕ БИЛЕТЫ -->
+        <section id="tickets" class="page">
+            <h1>Купленные билеты</h1>
+            <div class="tickets-list">
+                <div class="ticket-card" onclick="openModal('ticketDetailsModal')">
+                    <div class="ticket-route">
+                        <strong>Москва (SVO)</strong> → <strong>Сочи (AER)</strong>
+                    </div>
+                    <div class="ticket-info">
+                        <span>📅 15.12.2024</span>
+                        <span>⏰ 10:30</span>
+                        <span>✈️ Аэрофлот SU1120</span>
+                    </div>
+                    <div class="ticket-price">5 200 ₽</div>
+                </div>
+                <div class="ticket-card" onclick="openModal('ticketDetailsModal')">
+                    <div class="ticket-route">
+                        <strong>Санкт-Петербург (LED)</strong> → <strong>Москва (SVO)</strong>
+                    </div>
+                    <div class="ticket-info">
+                        <span>📅 20.12.2024</span>
+                        <span>⏰ 14:15</span>
+                        <span>✈️ S7 Airlines S7-1010</span>
+                    </div>
+                    <div class="ticket-price">3 800 ₽</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ВСЕ РЕЙСЫ -->
+        <section id="flights" class="page">
+            <h1>Все доступные рейсы</h1>
+            <div class="filters">
+                <input type="text" placeholder="Откуда">
+                <input type="text" placeholder="Куда">
+                <select>
+                    <option>Все авиакомпании</option>
+                    <option>Аэрофлот</option>
+                    <option>S7 Airlines</option>
+                    <option>Победа</option>
+                </select>
+                <button class="btn-primary">Фильтровать</button>
+            </div>
+            <div class="flights-list">
+                <div class="flight-row" onclick="openModal('flightDetailsModal')">
+                    <div>✈️ SU1120</div>
+                    <div>Москва → Сочи</div>
+                    <div>15.12 10:30</div>
+                    <div class="price">5 200 ₽</div>
+                </div>
+                <div class="flight-row" onclick="openModal('flightDetailsModal')">
+                    <div>✈️ S7-1010</div>
+                    <div>СПб → Москва</div>
+                    <div>20.12 14:15</div>
+                    <div class="price">3 800 ₽</div>
+                </div>
+                <div class="flight-row" onclick="openModal('flightDetailsModal')">
+                    <div>✈️ DP-405</div>
+                    <div>Москва → Казань</div>
+                    <div>22.12 08:00</div>
+                    <div class="price">2 900 ₽</div>
+                </div>
+                <div class="flight-row" onclick="openModal('flightDetailsModal')">
+                    <div>✈️ TK-414</div>
+                    <div>Москва → Стамбул</div>
+                    <div>25.12 16:45</div>
+                    <div class="price">12 800 ₽</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЧАТ ПОДДЕРЖКИ -->
+        <section id="support" class="page">
+            <h1>Чат технической поддержки</h1>
+            <div class="chat-box">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg msg-support">
+                        <strong>Поддержка:</strong> Здравствуйте! Чем мы можем вам помочь?
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Введите сообщение...">
+                    <button class="btn-primary" onclick="sendMessage()">Отправить</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- АКЦИОННЫЕ ПРЕДЛОЖЕНИЯ -->
+        <section id="promotions" class="page">
+            <h1>Акционные предложения</h1>
+            <div class="cards-grid">
+                <div class="card promo-card" onclick="openModal('promoDetailsModal')">
+                    <div class="promo-badge">-30%</div>
+                    <h3>Зимняя распродажа</h3>
+                    <p>Скидки до 30% на полёты в декабре</p>
+                </div>
+                <div class="card promo-card" onclick="openModal('promoDetailsModal')">
+                    <div class="promo-badge">-50%</div>
+                    <h3>Раннее бронирование</h3>
+                    <p>Билеты на лето со скидкой 50%</p>
+                </div>
+                <div class="card promo-card" onclick="openModal('promoDetailsModal')">
+                    <div class="promo-badge">2=1</div>
+                    <h3>Полёт вдвоём</h3>
+                    <p>Второй билет в подарок</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ОТЗЫВЫ -->
+        <section id="reviews" class="page">
+            <h1>Отзывы пользователей</h1>
+            <div class="reviews-list">
+                <div class="review">
+                    <div class="review-header">
+                        <strong>Алексей П.</strong>
+                        <span>⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p>Отличный сервис! Купил билет за 5 минут, всё прошло гладко.</p>
+                </div>
+                <div class="review">
+                    <div class="review-header">
+                        <strong>Мария С.</strong>
+                        <span>⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p>Удобный интерфейс и хорошие цены. Рекомендую!</p>
+                </div>
+                <div class="review">
+                    <div class="review-header">
+                        <strong>Дмитрий К.</strong>
+                        <span>⭐⭐⭐⭐</span>
+                    </div>
+                    <p>Поддержка отвечает быстро, акции реально выгодные.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- МОДАЛЬНОЕ ОКНО РЕГИСТРАЦИИ -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content register-modal">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2 class="modal-title">AirTicketHub</h2>
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>ФИО *</label>
+                    <input type="text" placeholder="Иванов Иван Иванович" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" placeholder="example@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль *</label>
+                    <input type="password" placeholder="••••••" required>
+                </div>
+                <div class="form-group">
+                    <label>Подтвердите пароль *</label>
+                    <input type="password" placeholder="••••••" required>
+                </div>
+                <div class="form-group">
+                    <label>Пол *</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="m" required> Мужчина</label>
+                        <label><input type="radio" name="gender" value="f"> Женщина</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-register-form">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: Привязка карты -->
+    <div id="cardModal" class="modal">
+        <div class="modal-content register-modal">
+            <span class="close" onclick="closeModal('cardModal')">&times;</span>
+            <h2 class="modal-title">Привязка карты</h2>
+            <form onsubmit="event.preventDefault(); alert('Карта успешно привязана!'); closeModal('cardModal');">
+                <div class="form-group">
+                    <label>Номер карты *</label>
+                    <input type="text" placeholder="0000 0000 0000 0000" required>
+                </div>
+                <div class="form-group">
+                    <label>Срок действия *</label>
+                    <input type="text" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label>CVV *</label>
+                    <input type="password" placeholder="•••" required>
+                </div>
+                <div class="form-group">
+                    <label>Имя владельца *</label>
+                    <input type="text" placeholder="IVAN IVANOV" required>
+                </div>
+                <button type="submit" class="btn-register-form">ПРИВЯЗАТЬ КАРТУ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: Редактирование профиля -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content register-modal">
+            <span class="close" onclick="closeModal('editProfileModal')">&times;</span>
+            <h2 class="modal-title">Редактирование профиля</h2>
+            <form onsubmit="event.preventDefault(); alert('Профиль сохранён!'); closeModal('editProfileModal');">
+                <div class="form-group">
+                    <label>ФИО</label>
+                    <input type="text" value="Иванов Иван Иванович">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" value="example@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" placeholder="+7 (___) ___-__-__">
+                </div>
+                <div class="form-group">
+                    <label>Дата рождения</label>
+                    <input type="date">
+                </div>
+                <button type="submit" class="btn-register-form">СОХРАНИТЬ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: Детали билета -->
+    <div id="ticketDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('ticketDetailsModal')">&times;</span>
+            <h2>Подробная информация о рейсе</h2>
+            <div class="details">
+                <p><strong>Номер рейса:</strong> SU1120</p>
+                <p><strong>Авиакомпания:</strong> Аэрофлот</p>
+                <p><strong>Маршрут:</strong> Москва (SVO) → Сочи (AER)</p>
+                <p><strong>Дата вылета:</strong> 15.12.2024, 10:30</p>
+                <p><strong>Дата прибытия:</strong> 15.12.2024, 13:00</p>
+                <p><strong>Время в пути:</strong> 2 ч 30 мин</p>
+                <p><strong>Класс:</strong> Эконом</p>
+                <p><strong>Место:</strong> 14A</p>
+                <p><strong>Багаж:</strong> 20 кг</p>
+                <p><strong>Стоимость:</strong> 5 200 ₽</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: Детали рейса -->
+    <div id="flightDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('flightDetailsModal')">&times;</span>
+            <h2>Информация о рейсе</h2>
+            <div class="details">
+                <p><strong>Номер рейса:</strong> SU1120</p>
+                <p><strong>Авиакомпания:</strong> Аэрофлот</p>
+                <p><strong>Тип самолёта:</strong> Airbus A320</p>
+                <p><strong>Маршрут:</strong> Москва → Сочи</p>
+                <p><strong>Свободных мест:</strong> 24</p>
+                <p><strong>Цена эконом:</strong> 5 200 ₽</p>
+                <p><strong>Цена бизнес:</strong> 15 800 ₽</p>
+                <button class="btn-primary" style="margin-top: 15px;" onclick="alert('Билет добавлен в корзину!')">Купить билет</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: Детали акции -->
+    <div id="promoDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('promoDetailsModal')">&times;</span>
+            <h2>Условия акции</h2>
+            <div class="details">
+                <p><strong>Название:</strong> Зимняя распродажа</p>
+                <p><strong>Скидка:</strong> до 30%</p>
+                <p><strong>Период действия:</strong> 01.12.2024 — 31.12.2024</p>
+                <p><strong>Условия:</strong></p>
+                <ul>
+                    <li>Скидка распространяется на билеты эконом-класса</li>
+                    <li>Минимальная стоимость заказа — 3 000 ₽</li>
+                    <li>Акция не суммируется с другими предложениями</li>
+                    <li>Возможно ограниченное количество мест</li>
+                </ul>
+                <button class="btn-primary" onclick="alert('Промокод WINTER30 применён!')">Активировать промокод</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА: Отслеживание заказа -->
+    <div id="trackOrderModal" class="modal">
+        <div class="modal-content register-modal">
+            <span class="close" onclick="closeModal('trackOrderModal')">&times;</span>
+            <h2 class="modal-title">Отслеживание заказа</h2>
+            <form onsubmit="event.preventDefault(); alert('Заказ #12345 - Подтверждён, билеты отправлены на email');">
+                <div class="form-group">
+                    <label>Номер заказа *</label>
+                    <input type="text" placeholder="#12345" required>
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" placeholder="example@gmail.com" required>
+                </div>
+                <button type="submit" class="btn-register-form">ОТСЛЕДИТЬ</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 AirTicketHub. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
